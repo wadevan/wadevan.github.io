@@ -3,28 +3,28 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://wadevan.github.io/posts/my-first-post/</loc>
+    <loc>/posts/my-first-post/</loc>
     <lastmod>2018-03-25T17:53:16+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://wadevan.github.io/categories/</loc>
+    <loc>/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://wadevan.github.io/posts/</loc>
+    <loc>/posts/</loc>
     <lastmod>2018-03-25T17:53:16+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://wadevan.github.io/tags/</loc>
+    <loc>/tags/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://wadevan.github.io/</loc>
+    <loc>/</loc>
     <lastmod>2018-03-25T17:53:16+08:00</lastmod>
     <priority>0</priority>
   </url>
