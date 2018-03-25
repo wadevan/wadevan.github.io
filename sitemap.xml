@@ -5,27 +5,39 @@
   <url>
     <loc>https://wadevan.github.io/posts/my-first-post/</loc>
     <lastmod>2018-03-25T17:53:16+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wadevan.github.io/</loc>
+    <lastmod>2018-03-25T17:53:16+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://wadevan.github.io/about/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://wadevan.github.io/categories/</loc>
+    <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wadevan.github.io/posts/</loc>
     <lastmod>2018-03-25T17:53:16+08:00</lastmod>
-    <priority>0</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://wadevan.github.io/tags/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://wadevan.github.io/</loc>
-    <lastmod>2018-03-25T17:53:16+08:00</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0</priority>
   </url>
   
