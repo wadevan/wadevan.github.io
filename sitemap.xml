@@ -3,6 +3,13 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://wadevan.github.io/about/</loc>
+    <lastmod>2018-03-25T21:06:15+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://wadevan.github.io/posts/my-first-post/</loc>
     <lastmod>2018-03-25T17:53:16+08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -12,12 +19,6 @@
   <url>
     <loc>https://wadevan.github.io/</loc>
     <lastmod>2018-03-25T17:53:16+08:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://wadevan.github.io/about/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
