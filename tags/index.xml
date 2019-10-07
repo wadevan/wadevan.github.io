@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on 長風無時</title>
+    <title>Tags on </title>
     <link>https://wadevan.github.io/tags/</link>
-    <description>Recent content in Tags on 長風無時</description>
+    <description>Recent content in Tags on </description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
+    <lastBuildDate>Thu, 07 Dec 2017 17:23:13 +0800</lastBuildDate>
     
 	<atom:link href="https://wadevan.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ethereum</title>
+      <link>https://wadevan.github.io/tags/ethereum/</link>
+      <pubDate>Thu, 07 Dec 2017 17:23:13 +0800</pubDate>
+      
+      <guid>https://wadevan.github.io/tags/ethereum/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>IPFS</title>
+      <link>https://wadevan.github.io/tags/ipfs/</link>
+      <pubDate>Tue, 26 Sep 2017 16:18:08 +0800</pubDate>
+      
+      <guid>https://wadevan.github.io/tags/ipfs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hugo</title>
+      <link>https://wadevan.github.io/tags/hugo/</link>
+      <pubDate>Sat, 29 Oct 2016 12:17:00 +0800</pubDate>
+      
+      <guid>https://wadevan.github.io/tags/hugo/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

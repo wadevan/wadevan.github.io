@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>algorithm on </title>
+    <link>https://wadevan.github.io/categories/algorithm/</link>
+    <description>Recent content in algorithm on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 07 Aug 2017 19:49:41 +0800</lastBuildDate>
+    
+	<atom:link href="https://wadevan.github.io/categories/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Bloomfilter算法实现</title>
+      <link>https://wadevan.github.io/2017/bloomfilter%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Mon, 07 Aug 2017 19:49:41 +0800</pubDate>
+      
+      <guid>https://wadevan.github.io/2017/bloomfilter%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/</guid>
+      <description>Bloom Filter Bloom Filter是由Bloom在1970年提出的一种快速查找算法，通过多个hash算法来共同判断一个元素（字符串）是否在这个集合内，空间利</description>
+    </item>
+    
+  </channel>
+</rss>

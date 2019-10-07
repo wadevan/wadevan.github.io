@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Categories - </title>
+  <title>ethereum rpc 调用分析 - </title>
   
 
 <meta name="renderer" content="webkit" />
@@ -23,7 +23,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="wadevan" />
-  <meta name="description" content="Record Like a Painter" />
+  <meta name="description" content="以太坊以JSON RPC的方式提供API service。本文将从go-ethereum源码中挖掘服务端如何提供JSON RPC 服务。 服务端启动rpc" />
+
 
 
 
@@ -33,8 +34,8 @@
 <meta name="generator" content="Hugo 0.57.2" />
 
 
-<link rel="canonical" href="https://wadevan.github.io/categories/" />
-<link href="/categories/index.xml" rel="alternate" type="application/rss+xml" title="" />
+<link rel="canonical" href="https://wadevan.github.io/2017/ethereum-rpc-%E8%B0%83%E7%94%A8%E5%88%86%E6%9E%90/" />
+
 
 
 
@@ -57,18 +58,26 @@
 
 
 
-<meta property="og:title" content="Categories" />
-<meta property="og:description" content="Record Like a Painter" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://wadevan.github.io/categories/" />
+<meta property="og:title" content="ethereum rpc 调用分析" />
+<meta property="og:description" content="以太坊以JSON RPC的方式提供API service。本文将从go-ethereum源码中挖掘服务端如何提供JSON RPC 服务。 服务端启动rpc" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://wadevan.github.io/2017/ethereum-rpc-%E8%B0%83%E7%94%A8%E5%88%86%E6%9E%90/" />
+<meta property="article:published_time" content="2017-10-07T17:24:31+08:00" />
+<meta property="article:modified_time" content="2017-10-07T17:24:31+08:00" />
+<meta itemprop="name" content="ethereum rpc 调用分析">
+<meta itemprop="description" content="以太坊以JSON RPC的方式提供API service。本文将从go-ethereum源码中挖掘服务端如何提供JSON RPC 服务。 服务端启动rpc">
 
-<meta property="og:updated_time" content="2018-01-05T19:20:05+08:00" />
-<meta itemprop="name" content="Categories">
-<meta itemprop="description" content="Record Like a Painter">
 
+<meta itemprop="datePublished" content="2017-10-07T17:24:31&#43;08:00" />
+<meta itemprop="dateModified" content="2017-10-07T17:24:31&#43;08:00" />
+<meta itemprop="wordCount" content="1104">
+
+
+
+<meta itemprop="keywords" content="ethereum," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Categories"/>
-<meta name="twitter:description" content="Record Like a Painter"/>
+<meta name="twitter:title" content="ethereum rpc 调用分析"/>
+<meta name="twitter:description" content="以太坊以JSON RPC的方式提供API service。本文将从go-ethereum源码中挖掘服务端如何提供JSON RPC 服务。 服务端启动rpc"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -249,7 +258,7 @@
 
       </li>
     
-        <li class="menu-item active">
+        <li class="menu-item">
         
           
           
@@ -285,127 +294,220 @@
     <main id="main" class="main bg-llight">
       <div class="content-wrapper">
         <div id="content" class="content container">
-          
-  
-  
-  
-  
-
-  
-  
+          <article class="post bg-white">
     
-    
-    
-    
-      <section id="archive" class="archive">
-        <div class="archive-title">
-        </div>
-          <div class="collection-title">
-            <h2 class="archive-year">
-              <a href="https://wadevan.github.io/categories/blockchain/">
-                Category: blockchain
-              </a>
-            </h2>
+    <header class="post-header">
+      <h1 class="post-title">ethereum rpc 调用分析</h1>
+      
+      <div class="post-meta">
+        <time datetime="2017-10-07" class="post-time">
+          2017-10-07
+        </time>
+        <div class="post-category">
+            <a href="https://wadevan.github.io/categories/blockchain/"> blockchain </a>
+            
           </div>
+        
 
-          
-            <div class="archive-post">
-              <time datetime="2018-01-05" class="archive-post-time">
-                2018-01-05
-              </time>
-              <span class="archive-post-title">
-                <a href="/2018/0x-protocol%E5%88%86%E6%9E%90/" class="archive-post-link">
-                  0x protocol分析
-                </a>
-              </span>
-            </div>
-          
-            <div class="archive-post">
-              <time datetime="2017-12-07" class="archive-post-time">
-                2017-12-07
-              </time>
-              <span class="archive-post-title">
-                <a href="/2017/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%BA%A4%E6%98%93%E6%B1%A0%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90/" class="archive-post-link">
-                  以太坊交易池逻辑分析
-                </a>
-              </span>
-            </div>
-          
-            <div class="archive-post">
-              <time datetime="2017-10-07" class="archive-post-time">
-                2017-10-07
-              </time>
-              <span class="archive-post-title">
-                <a href="/2017/ethereum-rpc-%E8%B0%83%E7%94%A8%E5%88%86%E6%9E%90/" class="archive-post-link">
-                  ethereum rpc 调用分析
-                </a>
-              </span>
-            </div>
-          
-            <div class="archive-post">
-              <time datetime="2017-09-26" class="archive-post-time">
-                2017-09-26
-              </time>
-              <span class="archive-post-title">
-                <a href="/2017/ipfs-%E5%86%85%E5%AE%B9%E5%AF%BB%E5%9D%80%E7%9A%84%E7%89%88%E6%9C%AC%E5%8C%96%E7%82%B9%E5%AF%B9%E7%82%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%8D%89%E7%A8%BF3-%E7%BF%BB%E8%AF%91/" class="archive-post-link">
-                  IPFS - 内容寻址的版本化点对点文件系统(草稿3) 翻译
-                </a>
-              </span>
-            </div>
-          
-            <div class="archive-post">
-              <time datetime="2017-07-27" class="archive-post-time">
-                2017-07-27
-              </time>
-              <span class="archive-post-title">
-                <a href="/2017/ipfs%E4%B8%8A%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/" class="archive-post-link">
-                  ipfs上部署静态网站
-                </a>
-              </span>
-            </div>
-          
-          
-            <div class="more-post">
-              <a href="https://wadevan.github.io/categories/blockchain/" class="more-post-link">More Post &gt;&gt;&gt;</a>
-            </div>
-          
-      </section>
+        
+        
+
+        
+        
+      </div>
+    </header>
+
     
     
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#服务端启动rpc-server">服务端启动rpc server</a></li>
+<li><a href="#http-rpc-请求响应流程">HTTP RPC 请求响应流程</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p>以太坊以JSON RPC的方式提供API service。本文将从go-ethereum源码中挖掘服务端如何提供JSON RPC 服务。</p>
+
+<h2 id="服务端启动rpc-server">服务端启动rpc server</h2>
+
+<pre><code>➜  go-ethereum git:(master) ✗ tree -d -L 1
+├── cmd
+    ├── geth
+        ├── main.go
+├── internal
+    ├── ethapi
+        ├── api.go
+├── node
+├── rpc
+...
+</code></pre>
+
+<p>go-ethereum的代码很多，单从发起一笔转账这样一个api而言，geth节点涉及的代码相对简单。<br />
+首先，<code>cmd/geth/main.go</code>是整个geth节点的entrypoint，main函数会实例化一个全功能的节点:</p>
+
+<pre><code>func geth(ctx *cli.Context) error {
+	node := makeFullNode(ctx)
+	startNode(ctx, node)
+	node.Wait()
+	return nil
+}
+</code></pre>
+
+<p>实例化之后，将调用<code>node/node.go</code>中的Start方法，来配置node相应的服务, 然后启动，等到所有的服务启动完成之后，节点开启RPC服务，根据config将相应的服务注册到RPC服务的白名单中:</p>
+
+<pre><code>func (s *Server) RegisterName(name string, rcvr interface{}) error {
+    ...
+    methods, subscriptions := 
+    suitableCallbacks(rcvrVal, svc.typ)
+    ...
+    svc.name = name
+    svc.callbacks, svc.subscriptions = methods, subscriptions
+</code></pre>
+
+<p>上述方法将一个service中的可以rpc调用的method存储到server的map中。<br />
+go-ethereum节点的rpc提供了四种能力的rpc，以HTTP为例：</p>
+
+<pre><code>func (n *Node) startHTTP(endpoint string, apis []rpc.API, modules []string, cors []string) error {
+    // Register all the APIs exposed by the services
+    ...
+    // All APIs registered, start the HTTP listener
+    var (
+        listener net.Listener
+        err      error
+    )
+    if listener, err = net.Listen(&quot;tcp&quot;, endpoint); err != nil {
+        return err
+    }
+    go rpc.NewHTTPServer(cors, handler).Serve(listener)
+    ...
+｝
+</code></pre>
+
+<p>geth节点将监听端口，默认是8545，然后开启HTTPServer，等待http rpc请求。</p>
+
+<h2 id="http-rpc-请求响应流程">HTTP RPC 请求响应流程</h2>
+
+<p>一个标准的<a href="http://www.jsonrpc.org/specification">HTTP RPC请求</a>如下:</p>
+
+<pre><code>curl -H &quot;Content-Type: application/json&quot; -X POST --data \
+'{&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;method&quot;:&quot;eth_sendRawTransaction&quot;,&quot;params&quot;:[&quot;0xd46e8dd67c5d32be8d&quot;],&quot;id&quot;:1}' http://localhost:8545
+</code></pre>
+
+<p>需要<code>jsonrpc</code>, <code>method</code>, <code>params</code>和<code>id</code>构成request body。当我们的geth节点的rpc server监听到新的request到来时，将会:
+1. 实例化一个NewJSONCodec编码器。
+2. 通过编码器来将request转换成jsonRequest，然后获取service_name和service_method以及params。
+3. 通过service_name 和service_method，可以找到当时注册的rpc服务。
+4. 通过反射方式运行rpc服务<code>reply := req.callb.method.Func.Call(arguments)</code>，得到method的返回值
+5. 利用编码器将返回值json序列化，然后返回<code>codec.Write(response)</code></p>
+
+<p>针对一个转账交易的话，我们得知service_name 是eth，service_method是sendRawTransaction，其方法在<code>internal/api.go</code>中。运行<code>reply := req.callb.method.Func.Call(arguments)</code>之后我们得到的reply是一个common.Hash对象，然后通过json序列化我们得到的结果是TxnHash的字符串。</p>
+
+<pre><code>{
+  &quot;id&quot;:1,
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;result&quot;: &quot;0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331&quot;
+}
+</code></pre>
+
+    </div>
+
     
     
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">wadevan</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+      2017-10-07
+      
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+
     
-      <section id="archive" class="archive">
-        <div class="archive-title">
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://wadevan.github.io/tags/ethereum/">ethereum</a>
+          
         </div>
-          <div class="collection-title">
-            <h2 class="archive-year">
-              <a href="https://wadevan.github.io/categories/algorithm/">
-                Category: algorithm
-              </a>
-            </h2>
-          </div>
 
-          
-            <div class="archive-post">
-              <time datetime="2017-08-07" class="archive-post-time">
-                2017-08-07
-              </time>
-              <span class="archive-post-title">
-                <a href="/2017/bloomfilter%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/" class="archive-post-link">
-                  Bloomfilter算法实现
-                </a>
-              </span>
-            </div>
-          
-          
-      </section>
-    
-    
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/2017/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%BA%A4%E6%98%93%E6%B1%A0%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90/">
+            
+            <i class="iconfont">
+              <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M691.908486 949.511495l75.369571-89.491197c10.963703-12.998035 10.285251-32.864502-1.499144-44.378743L479.499795 515.267417 757.434875 204.940602c11.338233-12.190647 11.035334-32.285311-0.638543-44.850487l-80.46666-86.564541c-11.680017-12.583596-30.356378-12.893658-41.662889-0.716314L257.233596 494.235404c-11.332093 12.183484-11.041474 32.266891 0.657986 44.844348l80.46666 86.564541c1.772366 1.910513 3.706415 3.533476 5.750981 4.877077l306.620399 321.703933C662.505829 963.726242 680.945807 962.528973 691.908486 949.511495z"></path>
+</svg>
+
+            </i>
+            <span class="prev-text nav-default">以太坊交易池逻辑分析</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/2017/ipfs-%E5%86%85%E5%AE%B9%E5%AF%BB%E5%9D%80%E7%9A%84%E7%89%88%E6%9C%AC%E5%8C%96%E7%82%B9%E5%AF%B9%E7%82%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%8D%89%E7%A8%BF3-%E7%BF%BB%E8%AF%91/">
+            <span class="next-text nav-default">IPFS - 内容寻址的版本化点对点文件系统(草稿3) 翻译</span>
+            <span class="prev-text nav-mobile">Next</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
 
   
   
 
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
 
         </div>
       </div>

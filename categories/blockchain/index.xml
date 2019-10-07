@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>blockchain on </title>
+    <link>https://wadevan.github.io/categories/blockchain/</link>
+    <description>Recent content in blockchain on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 05 Jan 2018 19:20:05 +0800</lastBuildDate>
+    
+	<atom:link href="https://wadevan.github.io/categories/blockchain/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>0x protocol分析</title>
+      <link>https://wadevan.github.io/2018/0x-protocol%E5%88%86%E6%9E%90/</link>
+      <pubDate>Fri, 05 Jan 2018 19:20:05 +0800</pubDate>
+      
+      <guid>https://wadevan.github.io/2018/0x-protocol%E5%88%86%E6%9E%90/</guid>
+      <description>0x protocol是当前币价比较高的一种token exchange协议。提供了一种以太坊网络中token交换的去中心化解决方案。 协议概述 下图</description>
+    </item>
+    
+    <item>
+      <title>以太坊交易池逻辑分析</title>
+      <link>https://wadevan.github.io/2017/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%BA%A4%E6%98%93%E6%B1%A0%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90/</link>
+      <pubDate>Thu, 07 Dec 2017 17:23:13 +0800</pubDate>
+      
+      <guid>https://wadevan.github.io/2017/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%BA%A4%E6%98%93%E6%B1%A0%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90/</guid>
+      <description>发送一笔以太坊网络转账交易，除了成功之外，会遇到各种问题，比如发送的一笔交易在etherscan中查不到，或者查到是pending的状态，后</description>
+    </item>
+    
+    <item>
+      <title>ethereum rpc 调用分析</title>
+      <link>https://wadevan.github.io/2017/ethereum-rpc-%E8%B0%83%E7%94%A8%E5%88%86%E6%9E%90/</link>
+      <pubDate>Sat, 07 Oct 2017 17:24:31 +0800</pubDate>
+      
+      <guid>https://wadevan.github.io/2017/ethereum-rpc-%E8%B0%83%E7%94%A8%E5%88%86%E6%9E%90/</guid>
+      <description>以太坊以JSON RPC的方式提供API service。本文将从go-ethereum源码中挖掘服务端如何提供JSON RPC 服务。 服务端启动rpc</description>
+    </item>
+    
+    <item>
+      <title>IPFS - 内容寻址的版本化点对点文件系统(草稿3) 翻译</title>
+      <link>https://wadevan.github.io/2017/ipfs-%E5%86%85%E5%AE%B9%E5%AF%BB%E5%9D%80%E7%9A%84%E7%89%88%E6%9C%AC%E5%8C%96%E7%82%B9%E5%AF%B9%E7%82%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%8D%89%E7%A8%BF3-%E7%BF%BB%E8%AF%91/</link>
+      <pubDate>Tue, 26 Sep 2017 16:18:08 +0800</pubDate>
+      
+      <guid>https://wadevan.github.io/2017/ipfs-%E5%86%85%E5%AE%B9%E5%AF%BB%E5%9D%80%E7%9A%84%E7%89%88%E6%9C%AC%E5%8C%96%E7%82%B9%E5%AF%B9%E7%82%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%8D%89%E7%A8%BF3-%E7%BF%BB%E8%AF%91/</guid>
+      <description>IPFS - Content Addressed, Versioned, P2P File System (draft 3) 摘要 星际文件系统是一个点对点分布式文件系统, 旨在使用相同的文件系统连接所有的计算设备。在某种情形下，IPFS很类似Web</description>
+    </item>
+    
+    <item>
+      <title>ipfs上部署静态网站</title>
+      <link>https://wadevan.github.io/2017/ipfs%E4%B8%8A%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/</link>
+      <pubDate>Thu, 27 Jul 2017 19:36:56 +0800</pubDate>
+      
+      <guid>https://wadevan.github.io/2017/ipfs%E4%B8%8A%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/</guid>
+      <description>IPFS ipfs是一个内容可寻址的点对点超媒体协议。基于http协议的网络中，我们获取内容需要先连接上内容所在的服务器，然后获取内容。ipfs网络</description>
+    </item>
+    
+    <item>
+      <title>Smart_contract</title>
+      <link>https://wadevan.github.io/2017/smart_contract/</link>
+      <pubDate>Tue, 18 Jul 2017 19:44:56 +0800</pubDate>
+      
+      <guid>https://wadevan.github.io/2017/smart_contract/</guid>
+      <description>使用nodejs部署智能合约 实现智能合约的方式很多种，可以用truffle框架来实现，编译，部署。 这里介绍一种简单的使用nodejs来实现，</description>
+    </item>
+    
+  </channel>
+</rss>

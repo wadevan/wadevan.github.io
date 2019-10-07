@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>IPFS on </title>
+    <link>https://wadevan.github.io/tags/ipfs/</link>
+    <description>Recent content in IPFS on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 26 Sep 2017 16:18:08 +0800</lastBuildDate>
+    
+	<atom:link href="https://wadevan.github.io/tags/ipfs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>IPFS - 内容寻址的版本化点对点文件系统(草稿3) 翻译</title>
+      <link>https://wadevan.github.io/2017/ipfs-%E5%86%85%E5%AE%B9%E5%AF%BB%E5%9D%80%E7%9A%84%E7%89%88%E6%9C%AC%E5%8C%96%E7%82%B9%E5%AF%B9%E7%82%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%8D%89%E7%A8%BF3-%E7%BF%BB%E8%AF%91/</link>
+      <pubDate>Tue, 26 Sep 2017 16:18:08 +0800</pubDate>
+      
+      <guid>https://wadevan.github.io/2017/ipfs-%E5%86%85%E5%AE%B9%E5%AF%BB%E5%9D%80%E7%9A%84%E7%89%88%E6%9C%AC%E5%8C%96%E7%82%B9%E5%AF%B9%E7%82%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%8D%89%E7%A8%BF3-%E7%BF%BB%E8%AF%91/</guid>
+      <description>IPFS - Content Addressed, Versioned, P2P File System (draft 3) 摘要 星际文件系统是一个点对点分布式文件系统, 旨在使用相同的文件系统连接所有的计算设备。在某种情形下，IPFS很类似Web</description>
+    </item>
+    
+    <item>
+      <title>ipfs上部署静态网站</title>
+      <link>https://wadevan.github.io/2017/ipfs%E4%B8%8A%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/</link>
+      <pubDate>Thu, 27 Jul 2017 19:36:56 +0800</pubDate>
+      
+      <guid>https://wadevan.github.io/2017/ipfs%E4%B8%8A%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/</guid>
+      <description>IPFS ipfs是一个内容可寻址的点对点超媒体协议。基于http协议的网络中，我们获取内容需要先连接上内容所在的服务器，然后获取内容。ipfs网络</description>
+    </item>
+    
+  </channel>
+</rss>
