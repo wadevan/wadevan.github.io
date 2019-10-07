@@ -11,14 +11,13 @@
   
   <url>
     <loc>https://wadevan.github.io/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://wadevan.github.io/categories/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
@@ -30,7 +29,7 @@
   <url>
     <loc>https://wadevan.github.io/tags/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0</priority>
+    <priority>0.5</priority>
   </url>
   
 </urlset>
