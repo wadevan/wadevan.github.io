@@ -89,6 +89,17 @@
 <![endif]-->
 
 
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-149523063-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
 
 
 </head>
@@ -1149,7 +1160,33 @@ ln -s /ipns/XLF2ipQ4jD3U /ipns/fs.benet.ai
 
   
 
+  <div class="disqus-comment">
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+    Show Disqus Comments
+  </div>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_config = function () {
+      this.page.url = "https://wadevan.github.io/2017/ipfs-%E5%86%85%E5%AE%B9%E5%AF%BB%E5%9D%80%E7%9A%84%E7%89%88%E6%9C%AC%E5%8C%96%E7%82%B9%E5%AF%B9%E7%82%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%8D%89%E7%A8%BF3-%E7%BF%BB%E8%AF%91/";
+    };
+    function load_disqus() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'wadevan';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+      $('#load_disqus').remove();
+    };
+  </script>
+  <noscript>Please enable JavaScript to view the
+    <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+  </noscript>
   
+  </div>
 
     
 
