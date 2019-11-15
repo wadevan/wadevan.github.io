@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>blockchain on 長風無時</title>
+    <link>https://wadevan.github.io/tags/blockchain/</link>
+    <description>Recent content in blockchain on 長風無時</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; &lt;a href=&#34;https://github.com/wadevan&#34;&gt;Wade Van&lt;/a&gt; 2019</copyright>
+    <lastBuildDate>Fri, 05 Jan 2018 19:20:05 +0800</lastBuildDate>
+    
+	<atom:link href="https://wadevan.github.io/tags/blockchain/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>0x protocol分析</title>
+      <link>https://wadevan.github.io/post/0xprotocol/</link>
+      <pubDate>Fri, 05 Jan 2018 19:20:05 +0800</pubDate>
+      
+      <guid>https://wadevan.github.io/post/0xprotocol/</guid>
+      <description>0x protocol是当前币价比较高的一种token exchange协议。提供了一种以太坊网络中token交换的去中心化解决方案。
+协议概述 下图为0x protocol的off-chain order转发和on-chain settlement的逻辑图。
+上图中灰色的矩形和圆形分别代表以太坊上的智能合约和账户。具体的逻辑： 1. maker同意DEX(去中心化交易所合约)获取他们关于Token A的信息。 2. Maker创建一笔关于Token A兑换为Token B的订单，并且声明了期望的交易rate和过期时间。将以上订单签名。 3. Maker 通过网络传输层将此订单广播 4. Taker接收到这笔订单，并且决定来完成此项订单。
+5. Taker同意DEX来获取他的关于Token B的信息。 6. Taker提交maker的那条以签名的order到DEX合约。 7. DEX合约认证maker的签名，验证通过后，然后将两者的Token按照拟定的rate进行交换。
+其中，关于上述的操作3和操作4off-chain的行为，0x protocol的网络传输层和会话层以及应用层来负责Order的relay，展示，以及推送。当然，用户也可以将签好名的order通过email，twitter等方式广播出去，Taker一旦获取之后，将order发送至DEX合约即可完成交易。
+消息格式 0x protocols的order的消息格式定义为：
+   Name Data Type Description     version address DEX 地址   maker address order的创建者   taker address 接单者地址   token A address ERC20 token 地址   token B address ERC20 token 地址   value A uint256 token A 的数量   value B uint256 token B 的数量   expiration uint256 过期时间   v uint8 ECDSA 签名参数   r bytes32 ECDSA 签名参数   s bytes32 ECDSA 签名参数    Order广播 0x protocols采用了off-chain的模式来传送order，用户可以自发的广播自己的订单。 同时，0x protocol 设计了一个简单的转发order的机制，maker也可以通过寻找relayer来上传自己的order。 其中relayer，maker，taker三者的关系如下： 协议提供了feeRecipient来促进order的转发，具体order广播逻辑如下： 1.</description>
+    </item>
+    
+  </channel>
+</rss>

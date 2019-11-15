@@ -10,7 +10,7 @@
 <meta property='og:description' content=''>
 <meta property='og:url' content='https://wadevan.github.io/post/'>
 <meta property='og:site_name' content='長風無時'>
-<meta property='og:type' content='website'><meta property='og:image' content='https://www.gravatar.com/avatar/88847c541f2e89e07dd03b28a866df49?s=256'><meta property='article:section' content='Post'><meta property='og:updated_time' content='2018-03-25T21:06:15&#43;08:00'/><meta name='twitter:card' content='summary'><meta name='twitter:site' content='@_univorn_'><meta name='twitter:creator' content='@_univorn_'>
+<meta property='og:type' content='website'><meta property='og:image' content='https://www.gravatar.com/avatar/88847c541f2e89e07dd03b28a866df49?s=256'><meta property='article:section' content='Post'><meta property='og:updated_time' content='2018-01-05T19:20:05&#43;08:00'/><meta name='twitter:card' content='summary'><meta name='twitter:site' content='@_univorn_'><meta name='twitter:creator' content='@_univorn_'>
 
 
 <link href="https://wadevan.github.io/index.xml" rel="alternate" type="application/rss+xml" title="長風無時" />
@@ -78,20 +78,6 @@
 <section class="section">
   <div class="container">
     
-    
-    <article>
-      <div class="subtitle tags is-6 is-pulled-right">
-        
-      </div>
-      <h2 class="subtitle is-6 date">August 7, 2017</h2>
-      <h1 class="title"><a href="https://wadevan.github.io/post/bloomfilter/">Bloomfilter算法实现</a></h1>
-      <div class="content">
-        Bloom Filter Bloom Filter是由Bloom在1970年提出的一种快速查找算法，通过多个hash算法来共同判断一个元素（字符串）是否在这个集合内，空间利用效率很高。Bloomfilter中保存了一个n位的bit数组， 当一个元素被加到这个集合时，这个元素的key通过k个hash算法生成k个值，然后将内存数组对应的k个位置置1。判断一个元素是否在集合中，只需要查看Bloomfilter的内存数组k个位置是否全为1。当其中一个不是1时，此元素不在集合中。bloomfilter判断一个元素属于当前集合时，存在一定的误差率e。
-误差率e bloom filter-math详细的推倒了误差率e和集合元素n，bit数组m以及hash算法个数之间的关系。总结如下：
-e = (1 - ((1 - 1/ m) ^ kn))^k ~= (1 - e^(-kn/m))^k k = (m / n) * ln2 //k最优解公式 m&gt;=nlg(1/E)*lge // 当误差率e&lt;E时，m和n的关系 ... e &lt; 0.1: k = 3.321928, m/n = 4.79 e &lt; 0.01: k = 6.643856, m/n = 9.58 e &lt; 0.001: k = 9.965784, m/n = 14.37  实现 Bloom Filter基于简单的加法Hash算法实现了一个Bloom Filter。通过给定误差率e和集合amount生成最优的Bloom filter。
-        
-      </div>
-    </article>
     
     <article>
       <div class="subtitle tags is-6 is-pulled-right">

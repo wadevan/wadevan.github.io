@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>hugo | 長風無時</title>
+<title>blockchain | 長風無時</title>
 
-<meta property='og:title' content='Tag: hugo - 長風無時'>
+<meta property='og:title' content='Tag: blockchain - 長風無時'>
 <meta property='og:description' content=''>
-<meta property='og:url' content='https://wadevan.github.io/tags/hugo/'>
+<meta property='og:url' content='https://wadevan.github.io/tags/blockchain/'>
 <meta property='og:site_name' content='長風無時'>
 <meta property='og:type' content='website'><meta property='og:image' content='https://www.gravatar.com/avatar/88847c541f2e89e07dd03b28a866df49?s=256'><meta property='article:section' content='Tags'><meta property='og:updated_time' content='2018-01-05T19:20:05&#43;08:00'/><meta name='twitter:card' content='summary'><meta name='twitter:site' content='@_univorn_'><meta name='twitter:creator' content='@_univorn_'>
 
@@ -20,7 +20,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-<link rel="canonical" href="https://wadevan.github.io/tags/hugo/">
+<link rel="canonical" href="https://wadevan.github.io/tags/blockchain/">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 </head>
@@ -82,26 +82,24 @@
       <div class="subtitle tags is-6 is-pulled-right">
         
         
-<a class="subtitle is-6" href="/tags/hugo">#hugo</a>
+<a class="subtitle is-6" href="/tags/blockchain">#blockchain</a>
 
 
 
         
       </div>
-      <h2 class="subtitle is-6 date">October 29, 2016</h2>
-      <h1 class="title"><a href="https://wadevan.github.io/post/hugo/">Hugo搭建Github Pages静态网站</a></h1>
+      <h2 class="subtitle is-6 date">January 5, 2018</h2>
+      <h1 class="title"><a href="https://wadevan.github.io/post/0xprotocol/">0x protocol分析</a></h1>
       <div class="content">
-        安装Hugo创建初始网站 安装hugo$ brew update &amp;&amp; brew install hugo
-创建自己的站点$ hugo new site mysite
-会生成以下目录
-content/ static/ themes/ config.toml  config.toml是网站的配置文件，一个TOML文件，全称是Tom’s Obvious, Minimal Language，这是它的作者GitHub联合创始人Tom Preston-Werner 觉得YAML不够优雅，捣鼓出来的一个新格式。如果你不喜欢这种格式，你可以将config.toml替换为YAML格式的config.yaml，或者json格式的config.json。hugo都支持。
-进行个人配置
-baseurl = &quot;http://slumber1122.github.io&quot; title = &quot;長風無時&quot; languageCode = &quot;en-us&quot; theme = &quot;hugo-zen&quot; author = &quot;wade van&quot; copyright = &quot;wade van All rights reserved.&quot; [params] logo = &quot;/images/me.jpg&quot;  安装Theme 进入 mysite $ cd mysite在gohugo选择一个皮肤,
-安装皮肤$ git submodule add https://github.com/spf13/hyde themes/hyde
-新建文章 content目录里放的是你写的markdown文章，layouts目录里放的是网站的模板文件，static目录里放的是一些图片、css、js等资源。
-创建一个about页面$ hugo new about.
+        0x protocol是当前币价比较高的一种token exchange协议。提供了一种以太坊网络中token交换的去中心化解决方案。
+协议概述 下图为0x protocol的off-chain order转发和on-chain settlement的逻辑图。
+上图中灰色的矩形和圆形分别代表以太坊上的智能合约和账户。具体的逻辑： 1. maker同意DEX(去中心化交易所合约)获取他们关于Token A的信息。 2. Maker创建一笔关于Token A兑换为Token B的订单，并且声明了期望的交易rate和过期时间。将以上订单签名。 3. Maker 通过网络传输层将此订单广播 4. Taker接收到这笔订单，并且决定来完成此项订单。
+5. Taker同意DEX来获取他的关于Token B的信息。 6. Taker提交maker的那条以签名的order到DEX合约。 7. DEX合约认证maker的签名，验证通过后，然后将两者的Token按照拟定的rate进行交换。
+其中，关于上述的操作3和操作4off-chain的行为，0x protocol的网络传输层和会话层以及应用层来负责Order的relay，展示，以及推送。当然，用户也可以将签好名的order通过email，twitter等方式广播出去，Taker一旦获取之后，将order发送至DEX合约即可完成交易。
+消息格式 0x protocols的order的消息格式定义为：
+   Name Data Type Description     version address DEX 地址   maker address order的创建者   taker address 接单者地址   token A address ERC20 token 地址   token B address ERC20 token 地址   value A uint256 token A 的数量   value B uint256 token B 的数量   expiration uint256 过期时间   v uint8 ECDSA 签名参数   r bytes32 ECDSA 签名参数   s bytes32 ECDSA 签名参数    Order广播 0x protocols采用了off-chain的模式来传送order，用户可以自发的广播自己的订单。 同时，0x protocol 设计了一个简单的转发order的机制，maker也可以通过寻找relayer来上传自己的order。 其中relayer，maker，taker三者的关系如下： 协议提供了feeRecipient来促进order的转发，具体order广播逻辑如下： 1.
         
-        <a class="button is-link" href="https://wadevan.github.io/post/hugo/" style="height:28px">
+        <a class="button is-link" href="https://wadevan.github.io/post/0xprotocol/" style="height:28px">
           Read more
         </a>
         
