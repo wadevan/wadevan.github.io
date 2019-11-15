@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ethereum on </title>
+    <title>ethereum on 長風無時</title>
     <link>https://wadevan.github.io/tags/ethereum/</link>
-    <description>Recent content in ethereum on </description>
+    <description>Recent content in ethereum on 長風無時</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
+    <copyright>&amp;copy; &lt;a href=&#34;https://github.com/wadevan&#34;&gt;Wade Van&lt;/a&gt; 2019</copyright>
     <lastBuildDate>Thu, 07 Dec 2017 17:23:13 +0800</lastBuildDate>
     
 	<atom:link href="https://wadevan.github.io/tags/ethereum/index.xml" rel="self" type="application/rss+xml" />
@@ -13,29 +14,40 @@
     
     <item>
       <title>以太坊交易池逻辑分析</title>
-      <link>https://wadevan.github.io/2017/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%BA%A4%E6%98%93%E6%B1%A0%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90/</link>
+      <link>https://wadevan.github.io/post/ethereum_tx_pool/</link>
       <pubDate>Thu, 07 Dec 2017 17:23:13 +0800</pubDate>
       
-      <guid>https://wadevan.github.io/2017/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%BA%A4%E6%98%93%E6%B1%A0%E9%80%BB%E8%BE%91%E5%88%86%E6%9E%90/</guid>
-      <description>发送一笔以太坊网络转账交易，除了成功之外，会遇到各种问题，比如发送的一笔交易在etherscan中查不到，或者查到是pending的状态，后</description>
+      <guid>https://wadevan.github.io/post/ethereum_tx_pool/</guid>
+      <description>发送一笔以太坊网络转账交易，除了成功之外，会遇到各种问题，比如发送的一笔交易在etherscan中查不到，或者查到是pending的状态，后来过了几个小时消失了，这些都与节点的交易池的处理逻辑相关，而交易池的逻辑可以有各种实现，目前官方的go-ethereum 的交易池逻辑如下。
+当一条交易进入挖矿节点的交易池(tx_pool)时，此节点会做出以下逻辑：
+ 通过判断交易hash，当这条交易已经在节点的交易池里面时，就会丢弃掉当前收到的这一个交易。 如果是一个全新的hash，就会更具共识协议，对这一条交易做基本的验证。验证包括：长度，value，是否溢出当前区块的gaslimit，Nonce值，转账提供的gas大小是否太小等。 如果验证不通过就会返回相应的错误代码。
+ 当验证通过的话，需要根据当前交易池的状态来决定，如果交易池满了的话，那么判断当前的转账交易提供的gas是否高于交易池里当前提供gas最低的那条交易。如果低了，就返回错误ErrUnderpriced，这是返回的错误经常在etherscan中看到。如果当前交易提供的gas值高的话，那么就剔除掉了那一条提供最低gas的转账交易，为当前交易腾出空间。这种情况发生之后，往往在etherscan中会观察到正在pending的交易消失了，找不到了。（也有很大机率依然能够查到pending的交易，原因是etherscan连接了很多节点，每个节点的交易池的状态都是不一样的，那条被踢出的交易在别的节点依然pending）
+ 如果当前交易的Nonce已经在交易池里面了，说明了这个用户想替代之前发出的相同的Nonce的交易。这时节点会判断当前交易的gas是否高出上一条相同Nonce的交易gas某一个阈值（比如默认的是10%）。如果高出了，那么就会剔除之前的那个交易，新的交易就会保留，如果没有高出，当前的交易就会返回失败。
+  以上逻辑都通过了，那么此条交易便成功存在交易池中等待打包，当然也有可能会被别的高gas的转账交易剔除的概率。
+总结，如果你发送了一笔交易碰巧赶上了以太坊网络拥堵，那么你的交易很有可能发送失败。原因是所有的挖矿节点都不接受这么低的gas交易了，或者你本来在交易池中，被剔除了。</description>
     </item>
     
     <item>
       <title>ethereum rpc 调用分析</title>
-      <link>https://wadevan.github.io/2017/ethereum-rpc-%E8%B0%83%E7%94%A8%E5%88%86%E6%9E%90/</link>
+      <link>https://wadevan.github.io/post/ethereum_rpc/</link>
       <pubDate>Sat, 07 Oct 2017 17:24:31 +0800</pubDate>
       
-      <guid>https://wadevan.github.io/2017/ethereum-rpc-%E8%B0%83%E7%94%A8%E5%88%86%E6%9E%90/</guid>
-      <description>以太坊以JSON RPC的方式提供API service。本文将从go-ethereum源码中挖掘服务端如何提供JSON RPC 服务。 服务端启动rpc</description>
+      <guid>https://wadevan.github.io/post/ethereum_rpc/</guid>
+      <description>以太坊以JSON RPC的方式提供API service。本文将从go-ethereum源码中挖掘服务端如何提供JSON RPC 服务。
+服务端启动rpc server ➜ go-ethereum git:(master) ✗ tree -d -L 1 ├── cmd ├── geth ├── main.go ├── internal ├── ethapi ├── api.go ├── node ├── rpc ...  go-ethereum的代码很多，单从发起一笔转账这样一个api而言，geth节点涉及的代码相对简单。
+首先，cmd/geth/main.go是整个geth节点的entrypoint，main函数会实例化一个全功能的节点:
+func geth(ctx *cli.Context) error { node := makeFullNode(ctx) startNode(ctx, node) node.Wait() return nil }  实例化之后，将调用node/node.go中的Start方法，来配置node相应的服务, 然后启动，等到所有的服务启动完成之后，节点开启RPC服务，根据config将相应的服务注册到RPC服务的白名单中:
+func (s *Server) RegisterName(name string, rcvr interface{}) error { ... methods, subscriptions := suitableCallbacks(rcvrVal, svc.typ) ... svc.name = name svc.</description>
     </item>
     
     <item>
       <title>使用nodejs部署智能合约</title>
-      <link>https://wadevan.github.io/2017/%E4%BD%BF%E7%94%A8nodejs%E9%83%A8%E7%BD%B2%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/</link>
+      <link>https://wadevan.github.io/post/smart_contract/</link>
       <pubDate>Tue, 18 Jul 2017 19:44:56 +0800</pubDate>
       
-      <guid>https://wadevan.github.io/2017/%E4%BD%BF%E7%94%A8nodejs%E9%83%A8%E7%BD%B2%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/</guid>
-      <description>使用nodejs部署智能合约 实现智能合约的方式很多种，可以用truffle框架来实现，编译，部署。 这里介绍一种简单的使用nodejs来实现，</description>
+      <guid>https://wadevan.github.io/post/smart_contract/</guid>
+      <description>使用nodejs部署智能合约 实现智能合约的方式很多种，可以用truffle框架来实现，编译，部署。 这里介绍一种简单的使用nodejs来实现，编译，部署的方法。 创建一个nodejs项目，实现一个简单的智能合约。
+mkdir sm &amp;amp;&amp;amp; cd sm npm init mkdir contracts &amp;amp;&amp;amp; cd contracts vi BaseToken.sol //BaseToken.sol contract Token{ address public owner; mapping (address =&amp;gt; uint) public balances; event Sent(address from, address to, uint amount) function Token(){ owner = msg.sender; balances[owner] = 100000000; } function send(address receiver, uint amount){ if (balances[msg.sender] &amp;lt; amount) return; balances[msg.sender] -= amount; balances[receiver] += amount; Sent(msg.sender, receiver, amount); } }  这个合约实现了一个造币和转币的逻辑。 我们的合约是运行在evm上面的字节码，solidity是静态语言，需要通过编译器生成evm的字节码。</description>
     </item>
     
   </channel>

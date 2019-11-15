@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>hugo on </title>
+    <title>hugo on 長風無時</title>
     <link>https://wadevan.github.io/tags/hugo/</link>
-    <description>Recent content in hugo on </description>
+    <description>Recent content in hugo on 長風無時</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
+    <copyright>&amp;copy; &lt;a href=&#34;https://github.com/wadevan&#34;&gt;Wade Van&lt;/a&gt; 2019</copyright>
     <lastBuildDate>Sat, 29 Oct 2016 12:17:00 +0800</lastBuildDate>
     
 	<atom:link href="https://wadevan.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
@@ -13,11 +14,19 @@
     
     <item>
       <title>Hugo搭建Github Pages静态网站</title>
-      <link>https://wadevan.github.io/2016/hugo%E6%90%AD%E5%BB%BAgithub-pages%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/</link>
+      <link>https://wadevan.github.io/post/hugo/</link>
       <pubDate>Sat, 29 Oct 2016 12:17:00 +0800</pubDate>
       
-      <guid>https://wadevan.github.io/2016/hugo%E6%90%AD%E5%BB%BAgithub-pages%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/</guid>
-      <description>安装Hugo创建初始网站 安装hugo$ brew update &amp;amp;&amp;amp; brew install hugo 创建自己的站点$ hugo new site mysite 会生成以下目录 content/ static/ themes/ config.toml config.toml是网站的配置文件，一个</description>
+      <guid>https://wadevan.github.io/post/hugo/</guid>
+      <description>安装Hugo创建初始网站 安装hugo$ brew update &amp;amp;&amp;amp; brew install hugo
+创建自己的站点$ hugo new site mysite
+会生成以下目录
+content/ static/ themes/ config.toml  config.toml是网站的配置文件，一个TOML文件，全称是Tom’s Obvious, Minimal Language，这是它的作者GitHub联合创始人Tom Preston-Werner 觉得YAML不够优雅，捣鼓出来的一个新格式。如果你不喜欢这种格式，你可以将config.toml替换为YAML格式的config.yaml，或者json格式的config.json。hugo都支持。
+进行个人配置
+baseurl = &amp;quot;http://slumber1122.github.io&amp;quot; title = &amp;quot;長風無時&amp;quot; languageCode = &amp;quot;en-us&amp;quot; theme = &amp;quot;hugo-zen&amp;quot; author = &amp;quot;wade van&amp;quot; copyright = &amp;quot;wade van All rights reserved.&amp;quot; [params] logo = &amp;quot;/images/me.jpg&amp;quot;  安装Theme 进入 mysite $ cd mysite在gohugo选择一个皮肤,
+安装皮肤$ git submodule add https://github.com/spf13/hyde themes/hyde
+新建文章 content目录里放的是你写的markdown文章，layouts目录里放的是网站的模板文件，static目录里放的是一些图片、css、js等资源。
+创建一个about页面$ hugo new about.</description>
     </item>
     
   </channel>

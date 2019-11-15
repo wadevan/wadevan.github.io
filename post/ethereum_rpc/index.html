@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>ethereum rpc 调用分析 | 長風無時</title>
+
+<meta property='og:title' content='ethereum rpc 调用分析 - 長風無時'>
+<meta property='og:description' content='以太坊以JSON RPC的方式提供API service。本文将从go-ethereum源码中挖掘服务端如何提供JSON RPC 服务。
+服务端启动rpc server ➜ go-ethereum git:(master) ✗ tree -d -L 1 ├── cmd ├── geth ├── main.go ├── internal ├── ethapi ├── api.go ├── node ├── rpc ...  go-ethereum的代码很多，单从发起一笔转账这样一个api而言，geth节点涉及的代码相对简单。
+首先，cmd/geth/main.go是整个geth节点的entrypoint，main函数会实例化一个全功能的节点:
+func geth(ctx *cli.Context) error { node := makeFullNode(ctx) startNode(ctx, node) node.Wait() return nil }  实例化之后，将调用node/node.go中的Start方法，来配置node相应的服务, 然后启动，等到所有的服务启动完成之后，节点开启RPC服务，根据config将相应的服务注册到RPC服务的白名单中:
+func (s *Server) RegisterName(name string, rcvr interface{}) error { ... methods, subscriptions := suitableCallbacks(rcvrVal, svc.typ) ... svc.name = name svc.'>
+<meta property='og:url' content='https://wadevan.github.io/post/ethereum_rpc/'>
+<meta property='og:site_name' content='長風無時'>
+<meta property='og:type' content='article'><meta property='og:image' content='https://www.gravatar.com/avatar/88847c541f2e89e07dd03b28a866df49?s=256'><meta property='article:section' content='Post'><meta property='article:tag' content='ethereum'><meta property='article:published_time' content='2017-10-07T17:24:31&#43;08:00'/><meta property='article:modified_time' content='2017-10-07T17:24:31&#43;08:00'/><meta name='twitter:card' content='summary'><meta name='twitter:site' content='@_univorn_'><meta name='twitter:creator' content='@_univorn_'>
+
+
+<link href="https://wadevan.github.io/index.xml" rel="alternate" type="application/rss+xml" title="長風無時" />
+
+<link rel="stylesheet" href="/css/style.css"/><link rel='stylesheet' href='https://wadevan.github.io/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="canonical" href="https://wadevan.github.io/post/ethereum_rpc/">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <nav id="nav-main" class="nav">
+      <div id="nav-name" class="nav-left">
+        <a id="nav-anchor" class="nav-item" href="https://wadevan.github.io">
+          <h1 id="nav-heading" class="title is-4">長風無時</h1>
+        </a>
+      </div>
+      <div class="nav-right">
+        <nav id="nav-items" class="nav-item level is-mobile"><a class="level-item" aria-label="github" href='https://github.com/wadevan'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="twitter" href='https://twitter.com/_univorn_'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="email" href='mailto:wadevanii@gmail.com'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+
+      
+    </nav>
+
+  </div>
+  <script src="/js/navicon-shift.js"></script>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+      
+<a class="subtitle is-6" href="/tags/ethereum">#ethereum</a>
+
+
+
+      
+    </div>
+    <h2 class="subtitle is-6">October 7, 2017</h2>
+    <h1 class="title">ethereum rpc 调用分析</h1>
+    
+    <div class="content">
+      
+
+<p>以太坊以JSON RPC的方式提供API service。本文将从go-ethereum源码中挖掘服务端如何提供JSON RPC 服务。</p>
+
+<h2 id="服务端启动rpc-server">服务端启动rpc server</h2>
+
+<pre><code>➜  go-ethereum git:(master) ✗ tree -d -L 1
+├── cmd
+    ├── geth
+        ├── main.go
+├── internal
+    ├── ethapi
+        ├── api.go
+├── node
+├── rpc
+...
+</code></pre>
+
+<p>go-ethereum的代码很多，单从发起一笔转账这样一个api而言，geth节点涉及的代码相对简单。<br />
+首先，<code>cmd/geth/main.go</code>是整个geth节点的entrypoint，main函数会实例化一个全功能的节点:</p>
+
+<pre><code>func geth(ctx *cli.Context) error {
+	node := makeFullNode(ctx)
+	startNode(ctx, node)
+	node.Wait()
+	return nil
+}
+</code></pre>
+
+<p>实例化之后，将调用<code>node/node.go</code>中的Start方法，来配置node相应的服务, 然后启动，等到所有的服务启动完成之后，节点开启RPC服务，根据config将相应的服务注册到RPC服务的白名单中:</p>
+
+<pre><code>func (s *Server) RegisterName(name string, rcvr interface{}) error {
+    ...
+    methods, subscriptions := 
+    suitableCallbacks(rcvrVal, svc.typ)
+    ...
+    svc.name = name
+    svc.callbacks, svc.subscriptions = methods, subscriptions
+</code></pre>
+
+<p>上述方法将一个service中的可以rpc调用的method存储到server的map中。<br />
+go-ethereum节点的rpc提供了四种能力的rpc，以HTTP为例：</p>
+
+<pre><code>func (n *Node) startHTTP(endpoint string, apis []rpc.API, modules []string, cors []string) error {
+    // Register all the APIs exposed by the services
+    ...
+    // All APIs registered, start the HTTP listener
+    var (
+        listener net.Listener
+        err      error
+    )
+    if listener, err = net.Listen(&quot;tcp&quot;, endpoint); err != nil {
+        return err
+    }
+    go rpc.NewHTTPServer(cors, handler).Serve(listener)
+    ...
+｝
+</code></pre>
+
+<p>geth节点将监听端口，默认是8545，然后开启HTTPServer，等待http rpc请求。</p>
+
+<h2 id="http-rpc-请求响应流程">HTTP RPC 请求响应流程</h2>
+
+<p>一个标准的<a href="http://www.jsonrpc.org/specification" target="_blank">HTTP RPC请求</a>如下:</p>
+
+<pre><code>curl -H &quot;Content-Type: application/json&quot; -X POST --data \
+'{&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;method&quot;:&quot;eth_sendRawTransaction&quot;,&quot;params&quot;:[&quot;0xd46e8dd67c5d32be8d&quot;],&quot;id&quot;:1}' http://localhost:8545
+</code></pre>
+
+<p>需要<code>jsonrpc</code>, <code>method</code>, <code>params</code>和<code>id</code>构成request body。当我们的geth节点的rpc server监听到新的request到来时，将会:
+1. 实例化一个NewJSONCodec编码器。
+2. 通过编码器来将request转换成jsonRequest，然后获取service_name和service_method以及params。
+3. 通过service_name 和service_method，可以找到当时注册的rpc服务。
+4. 通过反射方式运行rpc服务<code>reply := req.callb.method.Func.Call(arguments)</code>，得到method的返回值
+5. 利用编码器将返回值json序列化，然后返回<code>codec.Write(response)</code></p>
+
+<p>针对一个转账交易的话，我们得知service_name 是eth，service_method是sendRawTransaction，其方法在<code>internal/api.go</code>中。运行<code>reply := req.callb.method.Func.Call(arguments)</code>之后我们得到的reply是一个common.Hash对象，然后通过json序列化我们得到的结果是TxnHash的字符串。</p>
+
+<pre><code>{
+  &quot;id&quot;:1,
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;result&quot;: &quot;0xe670ec64341771606e55d6b4ca35a1a6b75ee3d5145a99d05921026d1527331&quot;
+}
+</code></pre>
+
+      
+      <div class="related">
+
+<h3>Similar articles:</h3>
+<ul>
+	
+	<li><a href="/post/smart_contract/">使用nodejs部署智能合约</a></li>
+	
+</ul>
+</div>
+      
+    </div>
+    
+  </div>
+</section>
+
+    <script src="/js/copycode.js"></script>
+
+
+<section class="section">
+  <div class="container">
+    <aside><div id="disqus_thread"></div></aside>
+  
+    <div id="show_comments"><a id="load_comments" class="button is-link">Load comments</a></div>
+  
+    <script type="text/javascript">
+      var disqus_shortname = 'wadevan';
+      function disqus() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+  
+      
+      var hash = window.location.hash.substr(1);
+      if ((hash.length > 8) && (hash.substring(0, 8) === "comment-")) {
+        disqus();
+        document.getElementById("show_comments").style.display = "none";
+      } else {
+        document.getElementById('load_comments').onclick = function() {
+          disqus();
+          document.getElementById("show_comments").style.display = "none";
+        };
+      }
+  
+
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>&copy; <a href="https://github.com/wadevan">Wade Van</a> 2019</p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-149523063-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="\/\/matomo.example.com\/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript>
+  <img src="//matomo.example.com/piwik.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+</noscript>
+
+
+</body>
+</html>
+

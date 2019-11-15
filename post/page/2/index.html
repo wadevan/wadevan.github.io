@@ -4,13 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>ethereum | 長風無時</title>
+<title>Posts | 長風無時</title>
 
-<meta property='og:title' content='Tag: ethereum - 長風無時'>
+<meta property='og:title' content='Posts - 長風無時'>
 <meta property='og:description' content=''>
-<meta property='og:url' content='https://wadevan.github.io/tags/ethereum/'>
+<meta property='og:url' content='https://wadevan.github.io/post/'>
 <meta property='og:site_name' content='長風無時'>
-<meta property='og:type' content='website'><meta property='og:image' content='https://www.gravatar.com/avatar/88847c541f2e89e07dd03b28a866df49?s=256'><meta property='article:section' content='Tags'><meta property='og:updated_time' content='2018-03-25T21:06:15&#43;08:00'/><meta name='twitter:card' content='summary'><meta name='twitter:site' content='@_univorn_'><meta name='twitter:creator' content='@_univorn_'>
+<meta property='og:type' content='website'><meta property='og:image' content='https://www.gravatar.com/avatar/88847c541f2e89e07dd03b28a866df49?s=256'><meta property='article:section' content='Post'><meta property='og:updated_time' content='2018-03-25T21:06:15&#43;08:00'/><meta name='twitter:card' content='summary'><meta name='twitter:site' content='@_univorn_'><meta name='twitter:creator' content='@_univorn_'>
 
 
 <link href="https://wadevan.github.io/index.xml" rel="alternate" type="application/rss+xml" title="長風無時" />
@@ -20,7 +20,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-<link rel="canonical" href="https://wadevan.github.io/tags/ethereum/">
+<link rel="canonical" href="https://wadevan.github.io/post/">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 </head>
@@ -78,26 +78,17 @@
 <section class="section">
   <div class="container">
     
+    
     <article>
       <div class="subtitle tags is-6 is-pulled-right">
         
-        
-<a class="subtitle is-6" href="/tags/ethereum">#ethereum</a>
-
-
-
-        
       </div>
-      <h2 class="subtitle is-6 date">December 7, 2017</h2>
-      <h1 class="title"><a href="https://wadevan.github.io/post/ethereum_tx_pool/">以太坊交易池逻辑分析</a></h1>
+      <h2 class="subtitle is-6 date">August 7, 2017</h2>
+      <h1 class="title"><a href="https://wadevan.github.io/post/bloomfilter/">Bloomfilter算法实现</a></h1>
       <div class="content">
-        发送一笔以太坊网络转账交易，除了成功之外，会遇到各种问题，比如发送的一笔交易在etherscan中查不到，或者查到是pending的状态，后来过了几个小时消失了，这些都与节点的交易池的处理逻辑相关，而交易池的逻辑可以有各种实现，目前官方的go-ethereum 的交易池逻辑如下。
-当一条交易进入挖矿节点的交易池(tx_pool)时，此节点会做出以下逻辑：
- 通过判断交易hash，当这条交易已经在节点的交易池里面时，就会丢弃掉当前收到的这一个交易。 如果是一个全新的hash，就会更具共识协议，对这一条交易做基本的验证。验证包括：长度，value，是否溢出当前区块的gaslimit，Nonce值，转账提供的gas大小是否太小等。 如果验证不通过就会返回相应的错误代码。
- 当验证通过的话，需要根据当前交易池的状态来决定，如果交易池满了的话，那么判断当前的转账交易提供的gas是否高于交易池里当前提供gas最低的那条交易。如果低了，就返回错误ErrUnderpriced，这是返回的错误经常在etherscan中看到。如果当前交易提供的gas值高的话，那么就剔除掉了那一条提供最低gas的转账交易，为当前交易腾出空间。这种情况发生之后，往往在etherscan中会观察到正在pending的交易消失了，找不到了。（也有很大机率依然能够查到pending的交易，原因是etherscan连接了很多节点，每个节点的交易池的状态都是不一样的，那条被踢出的交易在别的节点依然pending）
- 如果当前交易的Nonce已经在交易池里面了，说明了这个用户想替代之前发出的相同的Nonce的交易。这时节点会判断当前交易的gas是否高出上一条相同Nonce的交易gas某一个阈值（比如默认的是10%）。如果高出了，那么就会剔除之前的那个交易，新的交易就会保留，如果没有高出，当前的交易就会返回失败。
-  以上逻辑都通过了，那么此条交易便成功存在交易池中等待打包，当然也有可能会被别的高gas的转账交易剔除的概率。
-总结，如果你发送了一笔交易碰巧赶上了以太坊网络拥堵，那么你的交易很有可能发送失败。原因是所有的挖矿节点都不接受这么低的gas交易了，或者你本来在交易池中，被剔除了。
+        Bloom Filter Bloom Filter是由Bloom在1970年提出的一种快速查找算法，通过多个hash算法来共同判断一个元素（字符串）是否在这个集合内，空间利用效率很高。Bloomfilter中保存了一个n位的bit数组， 当一个元素被加到这个集合时，这个元素的key通过k个hash算法生成k个值，然后将内存数组对应的k个位置置1。判断一个元素是否在集合中，只需要查看Bloomfilter的内存数组k个位置是否全为1。当其中一个不是1时，此元素不在集合中。bloomfilter判断一个元素属于当前集合时，存在一定的误差率e。
+误差率e bloom filter-math详细的推倒了误差率e和集合元素n，bit数组m以及hash算法个数之间的关系。总结如下：
+e = (1 - ((1 - 1/ m) ^ kn))^k ~= (1 - e^(-kn/m))^k k = (m / n) * ln2 //k最优解公式 m&gt;=nlg(1/E)*lge // 当误差率e&lt;E时，m和n的关系 ... e &lt; 0.1: k = 3.321928, m/n = 4.79 e &lt; 0.01: k = 6.643856, m/n = 9.58 e &lt; 0.001: k = 9.965784, m/n = 14.37  实现 Bloom Filter基于简单的加法Hash算法实现了一个Bloom Filter。通过给定误差率e和集合amount生成最优的Bloom filter。
         
       </div>
     </article>
@@ -106,22 +97,19 @@
       <div class="subtitle tags is-6 is-pulled-right">
         
         
-<a class="subtitle is-6" href="/tags/ethereum">#ethereum</a>
+<a class="subtitle is-6" href="/tags/ipfs">#IPFS</a>
 
 
 
         
       </div>
-      <h2 class="subtitle is-6 date">October 7, 2017</h2>
-      <h1 class="title"><a href="https://wadevan.github.io/post/ethereum_rpc/">ethereum rpc 调用分析</a></h1>
+      <h2 class="subtitle is-6 date">July 27, 2017</h2>
+      <h1 class="title"><a href="https://wadevan.github.io/post/ipfs_site/">ipfs上部署静态网站</a></h1>
       <div class="content">
-        以太坊以JSON RPC的方式提供API service。本文将从go-ethereum源码中挖掘服务端如何提供JSON RPC 服务。
-服务端启动rpc server ➜ go-ethereum git:(master) ✗ tree -d -L 1 ├── cmd ├── geth ├── main.go ├── internal ├── ethapi ├── api.go ├── node ├── rpc ...  go-ethereum的代码很多，单从发起一笔转账这样一个api而言，geth节点涉及的代码相对简单。
-首先，cmd/geth/main.go是整个geth节点的entrypoint，main函数会实例化一个全功能的节点:
-func geth(ctx *cli.Context) error { node := makeFullNode(ctx) startNode(ctx, node) node.Wait() return nil }  实例化之后，将调用node/node.go中的Start方法，来配置node相应的服务, 然后启动，等到所有的服务启动完成之后，节点开启RPC服务，根据config将相应的服务注册到RPC服务的白名单中:
-func (s *Server) RegisterName(name string, rcvr interface{}) error { ... methods, subscriptions := suitableCallbacks(rcvrVal, svc.typ) ... svc.name = name svc.
+        IPFS ipfs是一个内容可寻址的点对点超媒体协议。基于http协议的网络中，我们获取内容需要先连接上内容所在的服务器，然后获取内容。ipfs网络中，所有的文件通过加密哈希映射到一个空间中，并且能够保证唯一。 在获取一个内容时，我们知道这个内容对应的哈希key，通过DHT算法，可以在一个巨大的网络节点中快速找到拥有数据的节点(在一个拥有10,000,000个节点的网络中只需要20跳)，从而检索出数据。 除了上述技术之外，IPFS也融合了git的版本管理，BitTorrent的bitswap，Self-Certified Filesystems等技术。
+IPFS的基本操作 // ipfs 初始化 &gt; ipfs init initializing ipfs node at /Users/jbenet/.go-ipfs generating 2048-bit RSA keypair...done peer identity: Qmcpo2iLBikrdf1d6QU6vXuNb6P7hwrbNPW9kLAH8eG67z to get started, enter: ipfs cat /ipfs/QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG/readme // 启动deamon &gt; ipfs daemon Initializing daemon... API server listening on /ip4/127.0.0.1/tcp/5001 Gateway server listening on /ip4/127.0.0.1/tcp/8080 // 获取文件 ipfs cat /ipfs/QmW2WQi7j6c7UgJTarActp7tDNikE4B2qXtFCfLPdsgaTQ/cat.jpg &gt;cat.jpg open cat.jpg //上传文件 &gt; hash=`echo &quot;I &lt;3 IPFS -$(whoami)&quot; | ipfs add -q` &gt; curl &quot;https://ipfs.
         
-        <a class="button is-link" href="https://wadevan.github.io/post/ethereum_rpc/" style="height:28px">
+        <a class="button is-link" href="https://wadevan.github.io/post/ipfs_site/" style="height:28px">
           Read more
         </a>
         
@@ -151,6 +139,36 @@ mkdir sm &amp;&amp; cd sm npm init mkdir contracts &amp;&amp; cd contracts vi Ba
       </div>
     </article>
     
+    <article>
+      <div class="subtitle tags is-6 is-pulled-right">
+        
+        
+<a class="subtitle is-6" href="/tags/hugo">#hugo</a>
+
+
+
+        
+      </div>
+      <h2 class="subtitle is-6 date">October 29, 2016</h2>
+      <h1 class="title"><a href="https://wadevan.github.io/post/hugo/">Hugo搭建Github Pages静态网站</a></h1>
+      <div class="content">
+        安装Hugo创建初始网站 安装hugo$ brew update &amp;&amp; brew install hugo
+创建自己的站点$ hugo new site mysite
+会生成以下目录
+content/ static/ themes/ config.toml  config.toml是网站的配置文件，一个TOML文件，全称是Tom’s Obvious, Minimal Language，这是它的作者GitHub联合创始人Tom Preston-Werner 觉得YAML不够优雅，捣鼓出来的一个新格式。如果你不喜欢这种格式，你可以将config.toml替换为YAML格式的config.yaml，或者json格式的config.json。hugo都支持。
+进行个人配置
+baseurl = &quot;http://slumber1122.github.io&quot; title = &quot;長風無時&quot; languageCode = &quot;en-us&quot; theme = &quot;hugo-zen&quot; author = &quot;wade van&quot; copyright = &quot;wade van All rights reserved.&quot; [params] logo = &quot;/images/me.jpg&quot;  安装Theme 进入 mysite $ cd mysite在gohugo选择一个皮肤,
+安装皮肤$ git submodule add https://github.com/spf13/hyde themes/hyde
+新建文章 content目录里放的是你写的markdown文章，layouts目录里放的是网站的模板文件，static目录里放的是一些图片、css、js等资源。
+创建一个about页面$ hugo new about.
+        
+        <a class="button is-link" href="https://wadevan.github.io/post/hugo/" style="height:28px">
+          Read more
+        </a>
+        
+      </div>
+    </article>
+    
   </div>
 </section>
 <section class="section">
@@ -158,6 +176,17 @@ mkdir sm &amp;&amp; cd sm npm init mkdir contracts &amp;&amp; cd contracts vi Ba
     <nav class="level is-mobile">
       <div class="level-left">
         <div class="level-item">
+          
+          <a class="button" href="/post/">
+            <span class="icon is-small is-marginless">
+              <svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <polyline points="15 18 9 12 15 6"/>
+    
+  </svg>
+            </span>
+            Newer
+          </a>
           
         </div>
       </div>
