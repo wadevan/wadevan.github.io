@@ -3,27 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://wadevan.github.io/post/cmux/</loc>
+    <lastmod>2019-11-16T00:04:09+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wadevan.github.io/tags/golang/</loc>
+    <lastmod>2019-11-16T00:04:09+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wadevan.github.io/post/</loc>
+    <lastmod>2019-11-16T00:04:09+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wadevan.github.io/tags/</loc>
+    <lastmod>2019-11-16T00:04:09+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wadevan.github.io/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</loc>
+    <lastmod>2019-11-16T00:04:09+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://wadevan.github.io/</loc>
+    <lastmod>2019-11-16T00:04:09+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://wadevan.github.io/post/0xprotocol/</loc>
     <lastmod>2018-01-05T19:20:05+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://wadevan.github.io/tags/blockchain/</loc>
-    <lastmod>2018-01-05T19:20:05+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://wadevan.github.io/post/</loc>
-    <lastmod>2018-01-05T19:20:05+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://wadevan.github.io/tags/</loc>
-    <lastmod>2018-01-05T19:20:05+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://wadevan.github.io/</loc>
     <lastmod>2018-01-05T19:20:05+08:00</lastmod>
   </url>
   

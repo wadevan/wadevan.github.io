@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>golang on 長風無時</title>
+    <link>https://wadevan.github.io/tags/golang/</link>
+    <description>Recent content in golang on 長風無時</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; &lt;a href=&#34;https://github.com/wadevan&#34;&gt;Wade Van&lt;/a&gt; 2019</copyright>
+    <lastBuildDate>Sat, 16 Nov 2019 00:04:09 +0800</lastBuildDate>
+    
+	<atom:link href="https://wadevan.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>cmux 源码分析</title>
+      <link>https://wadevan.github.io/post/cmux/</link>
+      <pubDate>Sat, 16 Nov 2019 00:04:09 +0800</pubDate>
+      
+      <guid>https://wadevan.github.io/post/cmux/</guid>
+      <description>cmux cmux 是soheilhy实现的一个复用连接的Go库，可以在同一个TCP listener上面监听多种服务
+源码分析 cmux 项目结构如下，整个代码量包含test代码总共2k行，核心代码几百行，很适合阅读
+➜ cmux git:(master) ✗ tree -L 2 . ├── CONTRIBUTORS ├── LICENSE ├── README.md ├── bench_test.go ├── buffer.go ├── cmd │ └── cmd.go ├── cmux.go ├── cmux_test.go ├── doc.go ├── example_recursive_test.go ├── example_test.go ├── example_tls_test.go ├── go.mod ├── go.sum ├── matchers.go ├── patricia.go └── patricia_test.go  在看cmux实现之前，可以先从README中看怎么使用cmux
+// Create the main listener. l, err := net.Listen(&amp;quot;tcp&amp;quot;, &amp;quot;:23456&amp;quot;) if err != nil { log.</description>
+    </item>
+    
+  </channel>
+</rss>

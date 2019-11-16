@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>cmux 源码分析 | 長風無時</title>
+
+<meta property='og:title' content='cmux 源码分析 - 長風無時'>
+<meta property='og:description' content='cmux cmux 是soheilhy实现的一个复用连接的Go库，可以在同一个TCP listener上面监听多种服务
+源码分析 cmux 项目结构如下，整个代码量包含test代码总共2k行，核心代码几百行，很适合阅读
+➜ cmux git:(master) ✗ tree -L 2 . ├── CONTRIBUTORS ├── LICENSE ├── README.md ├── bench_test.go ├── buffer.go ├── cmd │ └── cmd.go ├── cmux.go ├── cmux_test.go ├── doc.go ├── example_recursive_test.go ├── example_test.go ├── example_tls_test.go ├── go.mod ├── go.sum ├── matchers.go ├── patricia.go └── patricia_test.go  在看cmux实现之前，可以先从README中看怎么使用cmux
+// Create the main listener. l, err := net.Listen(&quot;tcp&quot;, &quot;:23456&quot;) if err != nil { log.'>
+<meta property='og:url' content='https://wadevan.github.io/post/cmux/'>
+<meta property='og:site_name' content='長風無時'>
+<meta property='og:type' content='article'><meta property='og:image' content='https://www.gravatar.com/avatar/88847c541f2e89e07dd03b28a866df49?s=256'><meta property='article:section' content='Post'><meta property='article:tag' content='golang'><meta property='article:tag' content='源码分析'><meta property='article:published_time' content='2019-11-16T00:04:09&#43;08:00'/><meta property='article:modified_time' content='2019-11-16T00:04:09&#43;08:00'/><meta name='twitter:card' content='summary'><meta name='twitter:site' content='@_univorn_'><meta name='twitter:creator' content='@_univorn_'>
+
+
+<link href="https://wadevan.github.io/index.xml" rel="alternate" type="application/rss+xml" title="長風無時" />
+
+<link rel="stylesheet" href="/css/style.css"/><link rel='stylesheet' href='https://wadevan.github.io/css/custom.css'><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="canonical" href="https://wadevan.github.io/post/cmux/">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <nav id="nav-main" class="nav">
+      <div id="nav-name" class="nav-left">
+        <a id="nav-anchor" class="nav-item" href="https://wadevan.github.io">
+          <h1 id="nav-heading" class="title is-4">長風無時</h1>
+        </a>
+      </div>
+      <div class="nav-right">
+        <nav id="nav-items" class="nav-item level is-mobile"><a class="level-item" aria-label="github" href='https://github.com/wadevan'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="twitter" href='https://twitter.com/_univorn_'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" aria-label="email" href='mailto:wadevanii@gmail.com'
+            target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+
+    <nav class="nav">
+      
+
+      
+    </nav>
+
+  </div>
+  <script src="/js/navicon-shift.js"></script>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="subtitle tags is-6 is-pulled-right">
+      
+      
+<a class="subtitle is-6" href="/tags/golang">#golang</a>
+
+
+
+  
+  | <a class="subtitle is-6" href="/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90">#源码分析</a>
+  
+
+      
+    </div>
+    <h2 class="subtitle is-6">November 16, 2019</h2>
+    <h1 class="title">cmux 源码分析</h1>
+    
+    <div class="content">
+      
+
+<h2 id="cmux">cmux</h2>
+
+<p><a href="https://github.com/soheilhy/cmux" target="_blank">cmux</a> 是<a href="https://github.com/soheilhy" target="_blank">soheilhy</a>实现的一个复用连接的Go库，可以在同一个TCP listener上面监听多种服务</p>
+
+<h2 id="源码分析">源码分析</h2>
+
+<p>cmux 项目结构如下，整个代码量包含test代码总共2k行，核心代码几百行，很适合阅读</p>
+
+<pre><code>➜  cmux git:(master) ✗ tree -L 2
+.
+├── CONTRIBUTORS
+├── LICENSE
+├── README.md
+├── bench_test.go
+├── buffer.go
+├── cmd
+│   └── cmd.go
+├── cmux.go
+├── cmux_test.go
+├── doc.go
+├── example_recursive_test.go
+├── example_test.go
+├── example_tls_test.go
+├── go.mod
+├── go.sum
+├── matchers.go
+├── patricia.go
+└── patricia_test.go
+</code></pre>
+
+<p>在看cmux实现之前，可以先从README中看怎么使用cmux</p>
+
+<pre><code class="language-go">// Create the main listener.
+l, err := net.Listen(&quot;tcp&quot;, &quot;:23456&quot;)
+if err != nil {
+    log.Fatal(err)
+}
+
+// Create a cmux.
+m := cmux.New(l)
+
+// Match connections in order:
+// First grpc, then HTTP, and otherwise Go RPC/TCP.
+grpcL := m.Match(cmux.HTTP2HeaderField(&quot;content-type&quot;, &quot;application/grpc&quot;))
+httpL := m.Match(cmux.HTTP1Fast())
+trpcL := m.Match(cmux.Any()) // Any means anything that is not yet matched.
+
+// Create your protocol servers.
+grpcS := grpc.NewServer()
+grpchello.RegisterGreeterServer(grpcS, &amp;server{})
+
+httpS := &amp;http.Server{
+    Handler: &amp;helloHTTP1Handler{},
+}
+
+trpcS := rpc.NewServer()
+trpcS.Register(&amp;ExampleRPCRcvr{})
+
+// Use the muxed listeners for your servers.
+go grpcS.Serve(grpcL)
+go httpS.Serve(httpL)
+go trpcS.Accept(trpcL)
+
+// Start serving!
+m.Serve()
+
+</code></pre>
+
+<ol>
+<li>创建一个tcp listener, 然后根据这个listener实例化cmux</li>
+<li>根据需求(grpc, http等)将实例化的m添加对应的match规则，得到对应的listener</li>
+<li>对不同的需求，将得到的listener分别在不同的goroutine中运行启动服务的方法</li>
+<li>在主线程中启动cmux来监听当前tcp listener过来的payload</li>
+</ol>
+
+<h3 id="cmux逻辑">cmux逻辑</h3>
+
+<p>首先分析创建, <code>New</code>方法很简单，创建了实现CMux接口的cMux实例，将listener赋值到root中，然后返回CMux:</p>
+
+<pre><code class="language-go">func New(l net.Listener) CMux {
+    return &amp;cMux{
+        root:        l,
+        bufLen:      1024,
+        errh:        func(_ error) bool { return true },
+        donec:       make(chan struct{}),
+        readTimeout: noTimeout,
+    }
+}
+
+</code></pre>
+
+<p>CMux接口定义如下:</p>
+
+<pre><code class="language-go">type CMux interface {
+    Match(...Matcher) net.Listener // 返回匹配当前Matcher的Listener,可以理解为向CMux注册一种Matcher，Matcher则是在复用的Listener中区分Conn的匹配器
+    MatchWithWriters(...MatchWriter) net.Listener // 返回匹配当前MatchWriter的Listener
+    Serve() error //CMux 启动方法，是一个阻塞的方法 
+    HandleError(ErrorHandler) // 注册errorhander
+    SetReadTimeout(time.Duration) // 设置读取matchers的超时时间
+}
+
+type Matcher func(io.Reader) bool
+</code></pre>
+
+<p>接着分析cmux添加Matcher的逻辑,首先需要定义一些Matcher，cmux已经实现了一些Matcher， 具体在<a href="https://github.com/soheilhy/cmux/blob/master/matchers.go" target="_blank">matchers.go</a>中
+比如http1的Matcher，则是解析io.Reader中报文第一行是否符合HTTP1的规则,如果匹配，返回true。<br />
+有了Matcher之后，向cmux中使用Match方法将其注册:</p>
+
+<pre><code class="language-go">func (m *cMux) Match(matchers ...Matcher) net.Listener {
+    mws := matchersToMatchWriters(matchers)
+    return m.MatchWithWriters(mws...)
+}
+
+func (m *cMux) MatchWithWriters(matchers ...MatchWriter) net.Listener {
+    ml := muxListener{
+        Listener: m.root,
+        connc:    make(chan net.Conn, m.bufLen),
+    }
+    m.sls = append(m.sls, matchersListener{ss: matchers, l: ml})
+    return ml
+}
+
+</code></pre>
+
+<p>Match实现很简单，将Matcher封装成matchersListener后append到list中
+matchersListener的作用是将匹配到的conn通过connc传递给外部调用Accept进行阻塞监听的具体的服务。</p>
+
+<p>再然后，分析<code>Serve</code>逻辑:</p>
+
+<pre><code class="language-go">func (m *cMux)Serve() error{
+    var wg sync.WaitGroup
+
+    ...
+
+    for {
+        c, err := m.root.Accept()
+        if err != nil {
+            if !m.handleErr(err) {
+                return err
+            }
+            continue
+        }
+        wg.Add(1)
+        go m.serve(c, m.donec, &amp;wg)
+    }
+}
+
+</code></pre>
+
+<p>Serve中，在死循环中接收root过来的新的net.Conn,接收之后在一个新的goroutine中执行match和dispatch逻辑，具体如下:</p>
+
+<pre><code class="language-go">func (m *cMux) serve(c net.Conn, donec &lt;-chan struct{}, wg *sync.WaitGroup) {
+    defer wg.Done()
+
+    muc := newMuxConn(c)      //(1)
+    if m.readTimeout &gt; noTimeout {
+        _ = c.SetReadDeadline(time.Now().Add(m.readTimeout))
+    }
+    for _, sl := range m.sls {
+        for _, s := range sl.ss {
+            matched := s(muc.Conn, muc.startSniffing())  //(2)
+            if matched {
+                muc.doneSniffing()                //(3)
+                if m.readTimeout &gt; noTimeout {
+                    _ = c.SetReadDeadline(time.Time{})
+                }
+                select {
+                case sl.l.connc &lt;- muc: //(4)
+                case &lt;-donec:
+                    _ = c.Close()
+                }
+                return
+            }
+        }
+    }
+
+    _ = c.Close()
+    err := ErrNotMatched{c: c}
+    if !m.handleErr(err) {
+        _ = m.root.Close()
+    }
+}
+
+</code></pre>
+
+<p>(1) serve将新过来的conn包裹成MuxConn，MuxConn的作用使用bufferReader结构进行探测conn的payload，然后传递给Matcher进行match<br />
+(2) 针对每一个注册进来的Matcher调用匹配方法进行匹配， 匹配的io.Reader是muc的bufferedReader，在Read之前首先调用了reset方法，将bufferedReader的sniffing置为true表示重新开始从bufferedReader中读取数据,Read方法如下:</p>
+
+<pre><code class="language-go">type bufferedReader struct {
+    source     io.Reader
+    buffer     bytes.Buffer
+    bufferRead int
+    bufferSize int
+    sniffing   bool
+    lastErr    error
+}
+
+func (s *bufferedReader) Read(p []byte) (int, error) {
+    if s.bufferSize &gt; s.bufferRead {
+        // If we have already read something from the buffer before, we return the
+        // same data and the last error if any. We need to immediately return,
+        // otherwise we may block for ever, if we try to be smart and call
+        // source.Read() seeking a little bit of more data.
+        bn := copy(p, s.buffer.Bytes()[s.bufferRead:s.bufferSize])
+        s.bufferRead += bn
+        return bn, s.lastErr
+    } else if !s.sniffing &amp;&amp; s.buffer.Cap() != 0 {
+        // We don't need the buffer anymore.
+        // Reset it to release the internal slice.
+        s.buffer = bytes.Buffer{}
+    }
+
+    // If there is nothing more to return in the sniffed buffer, read from the
+    // source.
+    sn, sErr := s.source.Read(p)
+    if sn &gt; 0 &amp;&amp; s.sniffing {
+        s.lastErr = sErr
+        if wn, wErr := s.buffer.Write(p[:sn]); wErr != nil {
+            return wn, wErr
+        }
+    }
+    return sn, sErr
+}
+
+func (s *bufferedReader) reset(snif bool) {
+    s.sniffing = snif
+    s.bufferRead = 0
+    s.bufferSize = s.buffer.Len()
+}
+</code></pre>
+
+<p>Read方法中首先判断当前已经读取的数量和自己缓存数据的数量，如果有并且缓存数据大于读取的数据，将buffer中的数据返回;反之从net.Conn中读取</p>
+
+<p>(3) 回到serve方法，当完成match之后，将bufferedReader的sniffing置为false<br />
+(4) 将MuxConn通过listener的connc传递出去,继续等待着新的conn到来<br />
+需要注意的是，一个conn只能被匹配一次，匹配的顺序和Matcher存入list的顺序一致。</p>
+
+<h3 id="tip">TIP</h3>
+
+<p>可以将bufferedReader放置在sync.Pool中</p>
+
+      
+      <div class="related">
+</div>
+      
+    </div>
+    
+  </div>
+</section>
+
+    <script src="/js/copycode.js"></script>
+
+
+<section class="section">
+  <div class="container">
+    <aside><div id="disqus_thread"></div></aside>
+  
+    <div id="show_comments"><a id="load_comments" class="button is-link">Load comments</a></div>
+  
+    <script type="text/javascript">
+      var disqus_shortname = 'wadevan';
+      function disqus() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+  
+      
+      var hash = window.location.hash.substr(1);
+      if ((hash.length > 8) && (hash.substring(0, 8) === "comment-")) {
+        disqus();
+        document.getElementById("show_comments").style.display = "none";
+      } else {
+        document.getElementById('load_comments').onclick = function() {
+          disqus();
+          document.getElementById("show_comments").style.display = "none";
+        };
+      }
+  
+
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>&copy; <a href="https://github.com/wadevan">Wade Van</a> 2019</p>
+    
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    
+  </div>
+</section>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-149523063-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="\/\/matomo.example.com\/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript>
+  <img src="//matomo.example.com/piwik.php?idsite=1&amp;rec=1" style="border:0" alt="" />
+</noscript>
+
+
+</body>
+</html>
+
